@@ -1,0 +1,48 @@
+# docker-composeのversionを指定
+version: '3'
+
+# db-dataというvolumeを作成
+volumes:
+  db-data:
+
+# ここから下にserviceを定義
+services:
+  # webというserviceを定義
+  web:
+    # docker buildと同じ。カレントディレクトリを指定
+    build: .
+    # サービスコンテナが起動したときに実行するコマンドを指定
+    # ">" -> 折り返して表示。 "-c" -> 複数コマンドを実行
+    command: >
+      bash -c "rails db:create &&
+              rails db:migrate &&
+              rails s -b 0.0.0.0"
+    # docker run -pと同じ。portを指定
+    ports:
+      - '3000:3000'
+    # docker run -vと同じ。マウント先を指定
+    volumes:
+      - '.:/rails-docker'
+    # コンテナ側に環境変数を設定
+    environment:
+      - 'DATABASE_PASSWORD=postgres'
+    # docker run -itと同じ
+    tty: true
+    stdin_open: true
+    # db serviseを作成後、docker runする
+    depends_on:
+      - db
+    # web serviceからdb serviceにアクセスできる
+    links:
+      - db
+
+  # dbというserviceを定義
+  db:
+    # imageを取得する
+    image: postgres:12
+    # マウント先を指定
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
+    # パスワードを設定
+    environment:
+      - 'POSTGRES_PASSWORD=postgres'
