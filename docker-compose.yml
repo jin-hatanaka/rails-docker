@@ -14,9 +14,9 @@ services:
     # サービスコンテナが起動したときに実行するコマンドを指定
     # ">" -> 折り返して表示。 "-c" -> 複数コマンドを実行
     command: >
-      bash -c "rails db:create &&
-              rails db:migrate &&
+      bash -c "rails db:migrate &&
               rails s -b 0.0.0.0"
+
     # docker run -pと同じ。portを指定
     ports:
       - '3000:3000'
