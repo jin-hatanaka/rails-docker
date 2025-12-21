@@ -1,7 +1,9 @@
-# このリポジトリについて
+# 概要
 
-HC の Docker 課題で GitHub のプロジェクトをクローンして、Docker Compose を使ってクローンした Rails アプリをコンテナ化するというものです。  
-</br>
+本リポジトリは、HC の Docker 課題として、
+GitHub 上の既存プロジェクトをクローンし、
+Docker Compose を用いて Ruby on Rails アプリケーションを
+コンテナ化したものです。
 
 # 環境構築方法
 
